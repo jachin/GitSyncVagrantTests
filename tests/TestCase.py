@@ -87,3 +87,13 @@ class GitSyncTest(unittest.TestCase):
         git_sync = GitSync(config, notifier)
 
         return git_sync
+
+    def assert_remote_file(self, directory, filename):
+        with settings(hide('warnings', 'running', 'stdout', 'stderr'), warn_only=True):
+            with cd(directory):
+                self.assertTrue(run("ls {0}".format(filename)).succeeded)
+
+    def assert_local_file(self, directory, filename):
+        with settings(hide('warnings', 'running', 'stdout', 'stderr'), warn_only=True):
+            with lcd(directory):
+                self.assertTrue(local("ls {0}".format(filename)).succeeded)
