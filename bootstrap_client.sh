@@ -17,5 +17,14 @@ touch /home/vagrant/.ssh/known_hosts
 ssh-keyscan -t rsa,dsa 10.10.10.11 2>&1 | sort -u - /home/vagrant/.ssh/known_hosts > /home/vagrant/.ssh/tmp_hosts
 cat /home/vagrant/.ssh/tmp_hosts >> /home/vagrant/.ssh/known_hosts
 
-#sudo easy_install -U distribute
-#sudo pip install GitSyncLib-0.1.tar.gz
+# Ensure the .bash_profile file exists.
+
+touch ~/.bash_profile
+
+# Setup the python path.
+
+if ! grep -Fxq "export PYTHONPATH=/vagrant" ~/.bash_profile
+then
+    echo "export PYTHONPATH=/vagrant" >> ~/.bash_profile
+    export export PYTHONPATH=/vagrant
+fi
