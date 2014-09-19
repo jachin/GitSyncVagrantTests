@@ -7,6 +7,7 @@ apt-get install -y vim
 apt-get install -y python-pip
 apt-get install -y fabric
 apt-get install -y python-nose
+apt-get install -y python-yaml
 
 cp /vagrant/insecure_vagrant_private_key.txt /home/vagrant/.ssh/id_rsa
 chown vagrant /home/vagrant/.ssh/id_rsa

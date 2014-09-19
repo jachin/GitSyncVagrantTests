@@ -1,9 +1,16 @@
+"""These tests need to be run from the 'client' vagrant box."""
+
 import unittest
 from pprint import pprint
+import yaml
 
 from fabric.api import env, local, run, execute, task
 from fabric.context_managers import lcd, cd, settings, hide
 from fabric.contrib.files import append
+
+from gitsynclib.GitSync import GitSync
+from gitsynclib.GitNotified import GitNotified
+
 
 host = '10.10.10.11'
 
@@ -82,6 +89,15 @@ class GitSyncTest(unittest.TestCase):
     def test_simple_change(self):
         update_yaml()
         execute(self.simple_change,self,hosts=[host],)
+
+        notifier = GitNotified()
+
+        config_stream = open("/vagrant/scratch.yaml", 'r')
+        config = yaml.safe_load(config_stream)
+
+        git_sync = GitSync(config, notifier)
+
+        git_sync.run_initial_sync()
 
 if __name__ == '__main__':
     unittest.main()

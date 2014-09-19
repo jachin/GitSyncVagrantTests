@@ -1,3 +1,6 @@
+.DS_Store
 .vagrant
 build
 *.pyc
+gitsynclib
+scratch
