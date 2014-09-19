@@ -1,7 +1,7 @@
 from fabric.api import local, run, execute, task
 from fabric.context_managers import lcd, cd, settings, hide
 
-from TestCase import GitSyncTest
+from testcase import GitSyncTest
 
 class GitSyncTest(GitSyncTest):
 
