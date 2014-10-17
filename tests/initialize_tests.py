@@ -14,10 +14,11 @@ class GitSyncInitTest(GitSyncTest):
 
     def run_initial_sync_test(self):
 
-        git_sync = self.get_git_sync()
-        git_sync.run_initial_sync()
-
         with settings(hide('warnings', 'running', 'stdout', 'stderr'), warn_only=True):
+
+            git_sync = self.get_git_sync()
+            git_sync.run_initial_sync()
+
             with lcd('/vagrant/scratch'):
                 self.assertTrue(local("ls one.txt").succeeded)
                 self.assertTrue(local("ls not_real.txt").failed)

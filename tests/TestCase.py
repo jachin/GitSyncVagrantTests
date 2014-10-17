@@ -54,15 +54,15 @@ def delete_local_repo():
     local("rm -Rf /vagrant/scratch")
 
 @task
-def update_yaml():
+def update_yaml(txt):
     with lcd('/vagrant'):
-        local("echo '{0}' > scratch.yaml".format(config_yaml))
+        local("echo '{0}' > scratch.yaml".format(txt))
 
 class GitSyncTest(unittest.TestCase):
 
     def setUp(self):
         self.host = host
-        update_yaml()
+        update_yaml(config_yaml)
         execute(
             setup_remote_project,
             hosts=[host],
@@ -78,10 +78,10 @@ class GitSyncTest(unittest.TestCase):
             hosts=[host],
         )
 
-    def get_git_sync(self):
+    def get_git_sync(self, config_path="/vagrant/scratch.yaml"):
         notifier = GitNotified()
 
-        config_stream = open("/vagrant/scratch.yaml", 'r')
+        config_stream = open(config_path, 'r')
         config = yaml.safe_load(config_stream)
 
         git_sync = GitSync(config, notifier)
