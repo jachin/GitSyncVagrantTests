@@ -1,7 +1,7 @@
 import unittest
 import yaml
 
-from fabric.api import local, run, execute, task
+from fabric.api import local, run, execute, task, puts
 from fabric.context_managers import lcd, cd, settings, hide
 from fabric.contrib.files import append
 
