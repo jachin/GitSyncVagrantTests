@@ -19,24 +19,26 @@ class LocalDirectoryAlreadyExistsTest(GitSyncTest):
                 local('rmdir scratch')
 
     def existing_local_directory_test(self):
-        try:
-            git_sync = self.get_git_sync()
-            git_sync.run_initial_sync()
-        except Exception as e:
-            self.assertTrue(
-                False,
-                "Running initial sync threw and exception: {0}".format(e)
-            )
+        with settings(hide('warnings', 'running', 'stdout', 'stderr')):
+            try:
+                git_sync = self.get_git_sync()
+                git_sync.run_initial_sync()
+            except Exception as e:
+                self.assertTrue(
+                    False,
+                    "Running initial sync threw and exception: {0}".format(e)
+                )
 
 
 class LocalDirectoryAlreadyExistsWithGitRepoTest(GitSyncTest):
 
     def setUp(self):
         super(LocalDirectoryAlreadyExistsWithGitRepoTest, self).setUp()
-        with lcd( '/vagrant' ):
-            local('mkdir scratch')
-        with lcd( '/vagrant/scratch' ):
-            local( 'git init' )
+        with settings(hide('warnings', 'running', 'stdout', 'stderr')):
+            with lcd( '/vagrant' ):
+                local('mkdir scratch')
+            with lcd( '/vagrant/scratch' ):
+                local( 'git init' )
 
     def tearDown(self):
         super(LocalDirectoryAlreadyExistsWithGitRepoTest, self).tearDown()
@@ -47,6 +49,7 @@ class LocalDirectoryAlreadyExistsWithGitRepoTest(GitSyncTest):
                 local('rm -Rf scratch')
 
     def existing_local_directory_with_git_repo_test(self):
-        git_sync = self.get_git_sync()
-        with self.assertRaises(Exception):
-            git_sync.run_initial_sync()
+        with settings(hide('warnings', 'running', 'stdout', 'stderr')):
+            git_sync = self.get_git_sync()
+            with self.assertRaises(Exception):
+                git_sync.run_initial_sync()
